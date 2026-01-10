@@ -22,7 +22,6 @@ env:
   NODE_VERSION: '20'
 
 jobs:
-  # Run full test suite before release
   test:
     runs-on: ubuntu-latest
     strategy:
@@ -53,7 +52,6 @@ jobs:
         working-directory: ${{ matrix.directory }}
         run: ${{ matrix.test-command }}
 
-  # Build frontend for production
   build-frontend:
     needs: test
     runs-on: ubuntu-latest
@@ -81,7 +79,7 @@ jobs:
           VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
           VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
 
-      - name: Verify build output
+      - name: Verify build
         working-directory: frontend
         run: |
           if [ ! -d "dist" ] || [ ! -f "dist/index.html" ]; then
@@ -90,60 +88,46 @@ jobs:
           fi
           echo "✅ Build verified"
 
-      - name: Upload production build
+      - name: Upload build
         uses: actions/upload-artifact@v4
         with:
           name: production-build
           path: frontend/dist
           retention-days: 30
 
-  # Deploy frontend to Vercel (skip if secrets not configured)
   deploy-frontend:
     needs: build-frontend
     runs-on: ubuntu-latest
-    if: ${{ secrets.VERCEL_TOKEN != '' }}
-    environment:
-      name: ${{ github.event.inputs.environment || 'production' }}
-      url: ${{ steps.deploy.outputs.url }}
     steps:
       - uses: actions/checkout@v4
 
-      - name: Download build artifact
+      - name: Download build
         uses: actions/download-artifact@v4
         with:
           name: production-build
           path: frontend/dist
 
+      - name: Install Vercel CLI
+        run: npm install -g vercel@latest
+
+      - name: Pull Vercel Environment
+        working-directory: frontend
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
       - name: Deploy to Vercel
         id: deploy
-        uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-args: '--prod'
-          working-directory: ./frontend
-          scope: ${{ secrets.VERCEL_ORG_ID }}
-
-      - name: Deployment status
+        working-directory: frontend
         run: |
-          echo "✅ Deployed to: ${{ steps.deploy.outputs.url }}"
+          URL=$(vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }})
+          echo "url=$URL" >> $GITHUB_OUTPUT
+          echo "✅ Deployed to: $URL"
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
-  # Skip deploy notification if secrets not set
-  deploy-skip-notice:
-    needs: build-frontend
-    runs-on: ubuntu-latest
-    if: ${{ secrets.VERCEL_TOKEN == '' }}
-    steps:
-      - name: Deployment skipped
-        run: |
-          echo "⚠️ Vercel deployment skipped - VERCEL_TOKEN not configured"
-          echo "To enable deployment, add these secrets to your repository:"
-          echo "  - VERCEL_TOKEN"
-          echo "  - VERCEL_ORG_ID"
-          echo "  - VERCEL_PROJECT_ID"
-
-  # Create GitHub release
   create-release:
     needs: [build-frontend]
     runs-on: ubuntu-latest
@@ -191,9 +175,8 @@ jobs:
               console.log('Release skipped:', error.message);
             }
 
-  # Final status
   release-status:
-    needs: [test, build-frontend, create-release]
+    needs: [test, build-frontend, deploy-frontend, create-release]
     runs-on: ubuntu-latest
     if: always()
     steps:
@@ -201,6 +184,7 @@ jobs:
         run: |
           echo "Test: ${{ needs.test.result }}"
           echo "Build: ${{ needs.build-frontend.result }}"
+          echo "Deploy: ${{ needs.deploy-frontend.result }}"
           echo "Release: ${{ needs.create-release.result }}"
           
           if [ "${{ needs.test.result }}" != "success" ]; then
