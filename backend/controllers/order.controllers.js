@@ -899,7 +899,6 @@ export const createStripePaymentIntent = async (req, res) => {
       },
     });
 
-    // Update order with stripeSessionId
     await Order.findByIdAndUpdate(orderId, { stripeSessionId: session.id });
 
     return res.status(200).json({

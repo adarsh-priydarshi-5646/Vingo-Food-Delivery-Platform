@@ -118,7 +118,6 @@ export const getItemByCity = async (req, res) => {
       return res.status(400).json({ message: "city is required" });
     }
     
-    // Escape regex special characters to prevent ReDoS
     const safeCity = escapeRegex(city);
     
     const cityShops = await Shop.find({
@@ -163,7 +162,6 @@ export const searchItems = async (req, res) => {
       return res.status(400).json({ message: "query and city required" });
     }
     
-    // Escape regex special characters to prevent ReDoS
     const safeCity = escapeRegex(city);
     const safeQuery = escapeRegex(query);
     

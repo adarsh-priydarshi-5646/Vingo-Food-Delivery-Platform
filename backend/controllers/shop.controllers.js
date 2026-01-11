@@ -66,7 +66,6 @@ export const getShopByCity = async (req, res) => {
   try {
     const { city } = req.params;
 
-    // Escape regex special characters to prevent ReDoS
     const safeCity = escapeRegex(city);
     
     const cityShops = await Shop.find({

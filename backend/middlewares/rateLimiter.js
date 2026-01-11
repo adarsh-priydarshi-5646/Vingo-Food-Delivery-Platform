@@ -1,12 +1,7 @@
-// Production-grade rate limiter with sliding window
-// Handles 5000+ requests efficiently
-
 class RateLimiter {
   constructor() {
     this.requests = new Map();
-    this.WINDOW_MS = 60 * 1000; // 1 minute window
-    
-    // Cleanup every 30 seconds
+    this.WINDOW_MS = 60 * 1000;
     setInterval(() => this.cleanup(), 30 * 1000);
   }
 
@@ -20,8 +15,6 @@ class RateLimiter {
     }
 
     const timestamps = this.requests.get(key);
-    
-    // Filter to only keep requests within window
     const validTimestamps = timestamps.filter(t => t > windowStart);
     
     if (validTimestamps.length >= maxRequests) {
@@ -51,7 +44,6 @@ class RateLimiter {
 
 const limiter = new RateLimiter();
 
-// General API rate limiter - 200 requests/minute per IP
 export const rateLimiter = (req, res, next) => {
   const ip = req.ip || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   const result = limiter.isAllowed(`api:${ip}`, 200);
@@ -69,7 +61,6 @@ export const rateLimiter = (req, res, next) => {
   next();
 };
 
-// Strict limiter for auth routes - 20 requests/minute
 export const authRateLimiter = (req, res, next) => {
   const ip = req.ip || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   const result = limiter.isAllowed(`auth:${ip}`, 20);
@@ -84,7 +75,6 @@ export const authRateLimiter = (req, res, next) => {
   next();
 };
 
-// Order rate limiter - 30 orders/minute per user
 export const orderRateLimiter = (req, res, next) => {
   const userId = req.userId || req.ip;
   const result = limiter.isAllowed(`order:${userId}`, 30);
@@ -99,7 +89,6 @@ export const orderRateLimiter = (req, res, next) => {
   next();
 };
 
-// Search rate limiter - 60 searches/minute
 export const searchRateLimiter = (req, res, next) => {
   const ip = req.ip || req.headers['x-forwarded-for'] || req.connection.remoteAddress;
   const result = limiter.isAllowed(`search:${ip}`, 60);

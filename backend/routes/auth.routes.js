@@ -12,7 +12,6 @@ import {
 
 const authRouter = express.Router();
 
-// All auth routes have stricter rate limiting (20 req/min)
 authRouter.post("/signup", authRateLimiter, signUp);
 authRouter.post("/signin", authRateLimiter, signIn);
 authRouter.get("/signout", signOut);

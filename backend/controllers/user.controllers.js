@@ -98,7 +98,6 @@ export const addAddress = async (req, res) => {
     const user = await User.findById(req.userId);
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    // If this is the first address or isDefault is true, manage default status
     if (user.addresses.length === 0) {
       address.isDefault = true;
     } else if (address.isDefault) {
@@ -182,21 +181,17 @@ export const getProfileStats = async (req, res) => {
   try {
     const userId = req.userId;
     
-    // Calculate total orders
     const totalOrders = await Order.countDocuments({ user: userId });
     
-    // Calculate total reviews
     const totalReviews = await Order.countDocuments({ 
       user: userId, 
       "orderRating.rating": { $ne: null } 
     });
     
-    // Calculate total spent for points
     const orders = await Order.find({ user: userId, payment: true });
     const totalSpent = orders.reduce((sum, order) => sum + (order.totalAmount || 0), 0);
     const points = Math.floor(totalSpent / 10);
     
-    // Calculate saved time (approx 20 mins per order)
     const savedTimeMinutes = totalOrders * 20;
     const savedTimeHours = (savedTimeMinutes / 60).toFixed(1);
 

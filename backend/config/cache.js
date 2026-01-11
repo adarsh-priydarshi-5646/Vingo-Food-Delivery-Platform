@@ -1,12 +1,7 @@
-// In-memory cache for high-performance data access
-// For production with multiple instances, use Redis
-
 class Cache {
   constructor() {
     this.store = new Map();
     this.ttlStore = new Map();
-    
-    // Cleanup expired entries every minute
     setInterval(() => this.cleanup(), 60 * 1000);
   }
 
@@ -29,7 +24,6 @@ class Cache {
     this.ttlStore.delete(key);
   }
 
-  // Delete keys matching pattern
   invalidate(pattern) {
     for (const key of this.store.keys()) {
       if (key.includes(pattern)) {
@@ -62,7 +56,6 @@ class Cache {
 
 export const cache = new Cache();
 
-// Cache middleware for GET requests
 export const cacheMiddleware = (ttlSeconds = 60) => {
   return (req, res, next) => {
     if (req.method !== 'GET') {
@@ -76,7 +69,6 @@ export const cacheMiddleware = (ttlSeconds = 60) => {
       return res.json(cached);
     }
 
-    // Override res.json to cache the response
     const originalJson = res.json.bind(res);
     res.json = (data) => {
       cache.set(key, data, ttlSeconds);
