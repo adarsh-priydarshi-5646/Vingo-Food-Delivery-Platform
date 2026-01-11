@@ -41,36 +41,18 @@ const Documentation = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('introduction');
 
-  const [activeDoc, setActiveDoc] = useState('technical');
-
-  const navItems = {
-    technical: [
-      { id: 'introduction', label: 'Introduction' },
-      { id: 'overview', label: 'Overview' },
-      { id: 'architecture', label: 'Architecture' },
-      { id: 'core-components', label: 'Core Components' },
-      { id: 'frontend-guide', label: 'Frontend Guide' },
-      { id: 'backend-guide', label: 'Backend Guide' },
-      { id: 'database-models', label: 'Database Models' },
-      { id: 'api-reference', label: 'API Reference' },
-      { id: 'optimizations', label: 'Optimizations' },
-      { id: 'deployment', label: 'Deployment' },
-    ],
-    techstack: [
-      { id: 'current-capacity', label: 'Current Capacity' },
-      { id: 'optimization-levels', label: 'Optimization Levels' },
-      { id: 'frontend-tech-stack', label: 'Frontend Tech Stack' },
-      { id: 'backend-tech-stack', label: 'Backend Tech Stack' },
-      { id: 'security-implementation', label: 'Security' },
-      { id: 'caching-strategy', label: 'Caching Strategy' },
-      { id: 'devops-ci-cd', label: 'DevOps & CI/CD' },
-      { id: 'current-architecture', label: 'Current Architecture' },
-      { id: 'future-scaling-aws-k8s', label: 'Future Scaling' },
-      { id: 'enterprise-features-missing', label: 'Enterprise Features' },
-    ],
-  };
-
-  const currentNavItems = navItems[activeDoc];
+  const navItems = [
+    { id: 'introduction', label: 'Introduction' },
+    { id: 'overview', label: 'Overview' },
+    { id: 'architecture', label: 'Architecture' },
+    { id: 'core-components', label: 'Core Components' },
+    { id: 'frontend-guide', label: 'Frontend Guide' },
+    { id: 'backend-guide', label: 'Backend Guide' },
+    { id: 'database-models', label: 'Database Models' },
+    { id: 'api-reference', label: 'API Reference' },
+    { id: 'optimizations', label: 'Optimizations' },
+    { id: 'deployment', label: 'Deployment' },
+  ];
 
   useEffect(() => {
     marked.setOptions({
@@ -82,11 +64,7 @@ const Documentation = () => {
 
     const fetchDocs = async () => {
       try {
-        const docFile =
-          activeDoc === 'technical'
-            ? '/docs/technical-documentation.md'
-            : '/docs/tech-stack-deep-dive.md';
-        const response = await fetch(docFile);
+        const response = await fetch('/docs/technical-documentation.md');
         const text = await response.text();
 
         const parts = text.split(/^# /m);
@@ -107,7 +85,6 @@ const Documentation = () => {
 
         setSections(sectionMap);
         setLoading(false);
-        setActiveSection(currentNavItems[0]?.id || 'introduction');
       } catch (err) {
         console.error('Failed to fetch documentation', err);
         setLoading(false);
@@ -115,21 +92,17 @@ const Documentation = () => {
     };
 
     fetchDocs();
-  }, [activeDoc]);
+  }, []);
 
   const navigateToSection = (id) => {
     setActiveSection(id);
     setIsSidebarOpen(false);
   };
 
-  const currentIndex = currentNavItems.findIndex(
-    (item) => item.id === activeSection,
-  );
-  const prevSection = currentIndex > 0 ? currentNavItems[currentIndex - 1] : null;
+  const currentIndex = navItems.findIndex((item) => item.id === activeSection);
+  const prevSection = currentIndex > 0 ? navItems[currentIndex - 1] : null;
   const nextSection =
-    currentIndex < currentNavItems.length - 1
-      ? currentNavItems[currentIndex + 1]
-      : null;
+    currentIndex < navItems.length - 1 ? navItems[currentIndex + 1] : null;
 
   if (loading) {
     return (
@@ -189,35 +162,11 @@ const Documentation = () => {
           className={`fixed md:sticky top-16 left-0 h-[calc(100vh-4rem)] w-64 bg-white border-r border-gray-200 overflow-y-auto z-40 transition-transform duration-300 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`}
         >
           <nav className="p-6">
-            {/* Doc Switcher */}
-            <div className="flex gap-2 mb-6">
-              <button
-                onClick={() => setActiveDoc('technical')}
-                className={`flex-1 px-3 py-2 text-xs font-semibold rounded-lg transition-colors ${
-                  activeDoc === 'technical'
-                    ? 'bg-[#E23744] text-white'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
-              >
-                Technical
-              </button>
-              <button
-                onClick={() => setActiveDoc('techstack')}
-                className={`flex-1 px-3 py-2 text-xs font-semibold rounded-lg transition-colors ${
-                  activeDoc === 'techstack'
-                    ? 'bg-[#E23744] text-white'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
-              >
-                Tech Stack
-              </button>
-            </div>
-
             <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-4">
-              {activeDoc === 'technical' ? 'Documentation' : 'Tech Stack Deep Dive'}
+              Documentation
             </p>
             <ul className="space-y-1">
-              {currentNavItems.map((item) => (
+              {navItems.map((item) => (
                 <li key={item.id}>
                   <a
                     href={`#${item.id}`}
@@ -344,7 +293,7 @@ const Documentation = () => {
             On this page
           </p>
           <ul className="space-y-3 text-sm border-l border-gray-200">
-            {currentNavItems.slice(0, 8).map((item) => (
+            {navItems.slice(0, 8).map((item) => (
               <li key={item.id}>
                 <a
                   href={`#${item.id}`}
