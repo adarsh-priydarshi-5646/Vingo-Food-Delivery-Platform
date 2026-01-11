@@ -7,11 +7,10 @@ assignees: ''
 ---
 
 ## 🐛 Bug Description
-
 <!-- Clear description of the bug -->
 
-## 📍 Where
 
+## 📍 Where
 - [ ] Frontend (React)
 - [ ] Backend (Node.js)
 - [ ] Database
@@ -20,30 +19,27 @@ assignees: ''
 - [ ] Real-time (Socket.IO)
 
 ## 🔄 Steps to Reproduce
-
 1. Go to '...'
 2. Click on '...'
 3. See error
 
 ## ✅ Expected Behavior
-
 <!-- What should happen -->
 
-## ❌ Actual Behavior
 
+## ❌ Actual Behavior
 <!-- What actually happens -->
 
-## 📸 Screenshots
 
+## 📸 Screenshots
 <!-- If applicable -->
 
-## 🌐 Environment
 
-- Browser:
-- OS:
+## 🌐 Environment
+- Browser: 
+- OS: 
 - Device: Desktop / Mobile
 - User Role: User / Owner / Delivery
 
 ## 📋 Additional Context
-
 <!-- Any other info -->
