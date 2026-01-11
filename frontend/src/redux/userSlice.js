@@ -1,3 +1,7 @@
+/**
+ * Redux User Slice - Global state for user, cart, orders & filters
+ * Cart persists to localStorage for session recovery
+ */
 import { createSlice } from "@reduxjs/toolkit";
 
 const saveCartToLocalStorage = (cartItems, totalAmount) => {

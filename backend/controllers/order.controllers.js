@@ -8,7 +8,13 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+/**
+ * Order Controller - Handles order lifecycle, delivery assignment & payments
+ */
 
+/**
+ * Assigns nearby available delivery boys to order via geospatial query
+ */
 const assignDeliveryBoys = async (order, io) => {
   try {
     for (const shopOrder of order.shopOrders) {

@@ -1,3 +1,6 @@
+/**
+ * Auth Controller - User authentication, OTP verification & password reset
+ */
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import genToken from "../utils/token.js";

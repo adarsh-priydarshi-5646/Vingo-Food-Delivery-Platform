@@ -1,3 +1,6 @@
+/**
+ * Checkout Page - Address selection, map preview, payment & order placement
+ */
 import React, { useEffect, useState } from "react";
 import { IoIosArrowRoundBack } from "react-icons/io";
 import { IoSearchOutline, IoLocationSharp } from "react-icons/io5";

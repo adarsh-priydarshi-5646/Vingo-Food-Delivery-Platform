@@ -1,3 +1,6 @@
+/**
+ * User Controller - Profile, addresses, bank details & stats management
+ */
 import User from "../models/user.model.js";
 import Order from "../models/order.model.js";
 

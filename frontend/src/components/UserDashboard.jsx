@@ -1,3 +1,6 @@
+/**
+ * User Dashboard - Main home page with categories, restaurants & filtered food items
+ */
 import React, { useEffect, useRef, useState, useMemo } from "react";
 import Nav from "./Nav";
 import { categories } from "../category";

@@ -1,3 +1,6 @@
+/**
+ * Shop Controller - Restaurant CRUD with city-based filtering
+ */
 import Shop from "../models/shop.model.js";
 import uploadOnCloudinary from "../utils/cloudinary.js";
 import { escapeRegex } from "../utils/sanitize.js";

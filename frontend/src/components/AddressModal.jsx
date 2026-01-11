@@ -1,3 +1,6 @@
+/**
+ * Address Modal - Add/Edit delivery address with geolocation detection
+ */
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaTimes, FaMapMarkerAlt, FaHome, FaBriefcase, FaEllipsisH, FaCompass, FaCheckCircle } from "react-icons/fa";

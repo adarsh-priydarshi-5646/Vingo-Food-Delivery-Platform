@@ -1,3 +1,6 @@
+/**
+ * Item Controller - CRUD operations for food items with search & rating
+ */
 import Item from "../models/item.model.js";
 import Shop from "../models/shop.model.js";
 import uploadOnCloudinary from "../utils/cloudinary.js";

@@ -1,3 +1,6 @@
+/**
+ * Home Page - Role-based dashboard routing (User/Owner/DeliveryBoy)
+ */
 import React from "react";
 import { useSelector } from "react-redux";
 import UserDashboard from "../components/UserDashboard";

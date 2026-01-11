@@ -1,3 +1,7 @@
+/**
+ * Express Server Entry Point
+ * Includes Socket.IO for real-time updates, security middlewares & graceful shutdown
+ */
 import express from "express";
 import dotenv from "dotenv";
 dotenv.config();
