@@ -36,7 +36,8 @@ export const addItem = async (req, res) => {
     return res.status(201).json(shop);
 
   } catch (error) {
-    return res.status(500).json({ message: `add item error ${error}` });
+    console.error("Add item error:", error);
+    return res.status(500).json({ message: "Failed to add item. Please try again." });
   }
 };
 
@@ -70,7 +71,8 @@ export const editItem = async (req, res) => {
     });
     return res.status(200).json(shop);
   } catch (error) {
-    return res.status(500).json({ message: `edit item error ${error}` });
+    console.error("Edit item error:", error);
+    return res.status(500).json({ message: "Failed to edit item. Please try again." });
   }
 };
 
@@ -83,7 +85,8 @@ export const getItemById = async (req, res) => {
     }
     return res.status(200).json(item);
   } catch (error) {
-    return res.status(500).json({ message: `get item error ${error}` });
+    console.error("Get item error:", error);
+    return res.status(500).json({ message: "Failed to get item. Please try again." });
   }
 };
 
@@ -103,7 +106,8 @@ export const deleteItem = async (req, res) => {
     });
     return res.status(200).json(shop);
   } catch (error) {
-    return res.status(500).json({ message: `delete item error ${error}` });
+    console.error("Delete item error:", error);
+    return res.status(500).json({ message: "Failed to delete item. Please try again." });
   }
 };
 
@@ -130,7 +134,8 @@ export const getItemByCity = async (req, res) => {
     const items = await Item.find({ shop: { $in: shopIds } });
     return res.status(200).json(items);
   } catch (error) {
-    return res.status(500).json({ message: `get item by city error ${error}` });
+    console.error("Get item by city error:", error);
+    return res.status(500).json({ message: "Failed to get items. Please try again." });
   }
 };
 
@@ -146,7 +151,8 @@ export const getItemsByShop = async (req, res) => {
       items: shop.items,
     });
   } catch (error) {
-    return res.status(500).json({ message: `get item by shop error ${error}` });
+    console.error("Get item by shop error:", error);
+    return res.status(500).json({ message: "Failed to get items. Please try again." });
   }
 };
 
@@ -181,7 +187,8 @@ export const searchItems = async (req, res) => {
 
     return res.status(200).json(items);
   } catch (error) {
-    return res.status(500).json({ message: `search item error ${error}` });
+    console.error("Search item error:", error);
+    return res.status(500).json({ message: "Search failed. Please try again." });
   }
 };
 
@@ -211,6 +218,7 @@ export const rating = async (req, res) => {
     await item.save();
     return res.status(200).json({ rating: item.rating });
   } catch (error) {
-    return res.status(500).json({ message: `rating error ${error}` });
+    console.error("Rating error:", error);
+    return res.status(500).json({ message: "Failed to submit rating. Please try again." });
   }
 };
