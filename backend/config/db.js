@@ -1,22 +1,18 @@
 import mongoose from "mongoose";
 
-/**
- * MongoDB Connection Configuration
- * Optimized for high-traffic production environments (5000+ req/s)
- */
 const connectDb = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URL, {
-      maxPoolSize: 100,           // Max concurrent connections
-      minPoolSize: 20,            // Pre-warmed connections for instant availability
-      maxIdleTimeMS: 30000,       // Close idle connections after 30s
+      maxPoolSize: 100,
+      minPoolSize: 20,
+      maxIdleTimeMS: 30000,
       serverSelectionTimeoutMS: 5000,
       socketTimeoutMS: 45000,
       connectTimeoutMS: 10000,
-      w: 'majority',              // Write concern for data durability
+      w: 'majority',
       wtimeoutMS: 2500,
-      readPreference: 'primaryPreferred',  // Read from primary, fallback to secondary
-      compressors: ['zlib'],      // Network compression for faster transfers
+      readPreference: 'primaryPreferred',
+      compressors: ['zlib'],
     });
 
     mongoose.connection.on('connected', () => {

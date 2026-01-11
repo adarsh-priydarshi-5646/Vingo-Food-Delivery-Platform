@@ -30,10 +30,6 @@ function UserDashboard() {
   const [showLeftCateButton, setShowLeftCateButton] = useState(false);
   const [showRightCateButton, setShowRightCateButton] = useState(false);
 
-  /**
-   * Memoized filter logic - prevents recalculation on every render
-   * Applies category, price, quick filters, and sorting
-   */
   const filteredItems = useMemo(() => {
     if (!itemsInMyCity) return [];
 

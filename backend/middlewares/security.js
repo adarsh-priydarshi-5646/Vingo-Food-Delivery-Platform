@@ -1,25 +1,19 @@
-/**
- * Security Headers Middleware
- * Protects against common web vulnerabilities (XSS, clickjacking, MIME sniffing)
- */
 export const securityHeaders = (req, res, next) => {
-  res.setHeader('X-Frame-Options', 'DENY');                    // Prevent clickjacking
-  res.setHeader('X-Content-Type-Options', 'nosniff');          // Prevent MIME sniffing
-  res.setHeader('X-XSS-Protection', '1; mode=block');          // XSS filter
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
   res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
-  res.removeHeader('X-Powered-By');                            // Hide server info
+  res.removeHeader('X-Powered-By');
   next();
 };
 
 /**
- * Request Sanitizer
- * Prevents NoSQL injection by removing MongoDB operators from input
+ * Sanitizes input to prevent NoSQL injection
  */
 export const sanitizeRequest = (req, res, next) => {
   const sanitize = (obj) => {
     if (typeof obj !== 'object' || obj === null) return obj;
     
-    // Remove keys starting with $ (MongoDB operators) or containing dots
     for (const key in obj) {
       if (key.startsWith('$') || key.includes('.')) {
         delete obj[key];

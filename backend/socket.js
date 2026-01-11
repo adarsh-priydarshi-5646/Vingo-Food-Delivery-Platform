@@ -1,18 +1,13 @@
 import User from "./models/user.model.js";
 
 /**
- * Socket.IO Event Handler
- * Manages real-time communication for:
- * - User identity binding (socket <-> userId)
- * - Delivery boy live location tracking
- * - Online/offline status management
+ * Socket.IO Handler - Real-time order tracking & delivery location updates
  */
 export const socketHandler = (io) => {
   io.on("connection", (socket) => {
-    // Bind socket to user for targeted notifications
     socket.on("identity", async ({ userId }) => {
       try {
-        const user = await User.findByIdAndUpdate(
+        await User.findByIdAndUpdate(
           userId,
           {
             socketId: socket.id,
@@ -21,25 +16,24 @@ export const socketHandler = (io) => {
           { new: true }
         );
         
-        socket.join(userId);  // Join room for direct messaging
+        socket.join(userId);
       } catch (error) {
         console.error("Identity error:", error);
       }
     });
 
-    // Broadcast delivery boy location to all connected clients
     socket.on("updateLocation", async ({ latitude, longitude, userId }) => {
       try {
-        const user = await User.findByIdAndUpdate(userId, {
+        await User.findByIdAndUpdate(userId, {
           location: {
             type: "Point",
-            coordinates: [longitude, latitude],  // GeoJSON format: [lng, lat]
+            coordinates: [longitude, latitude],
           },
           isOnline: true,
           socketId: socket.id,
         });
 
-        if (user) {
+        if (userId) {
           io.emit("updateDeliveryLocation", {
             deliveryBoyId: userId,
             latitude,
@@ -51,7 +45,6 @@ export const socketHandler = (io) => {
       }
     });
 
-    // Cleanup on disconnect
     socket.on("disconnect", async () => {
       try {
         await User.findOneAndUpdate(
