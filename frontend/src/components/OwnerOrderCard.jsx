@@ -1,3 +1,6 @@
+/**
+ * OwnerOrderCard Component - Order management card for restaurant owners
+ */
 import axios from "axios";
 import React, { useState } from "react";
 import { MdPhone, MdDeliveryDining, MdAccessTime, MdPerson } from "react-icons/md";

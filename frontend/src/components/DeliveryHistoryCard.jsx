@@ -1,3 +1,6 @@
+/**
+ * DeliveryHistoryCard Component - Past delivery order display card
+ */
 import React from "react";
 import { MdRestaurant, MdPerson, MdAccessTime, MdCheckCircle, MdCancel } from "react-icons/md";
 import { FaRupeeSign, FaMapMarkerAlt } from "react-icons/fa";

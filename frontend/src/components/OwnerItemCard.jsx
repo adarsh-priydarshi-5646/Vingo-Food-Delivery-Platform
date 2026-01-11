@@ -1,3 +1,6 @@
+/**
+ * OwnerItemCard Component - Menu item card with edit/delete for shop owners
+ */
 import axios from "axios";
 import React from "react";
 import { FaPen, FaTrashAlt, FaTag } from "react-icons/fa";

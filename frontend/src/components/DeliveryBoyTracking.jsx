@@ -1,3 +1,6 @@
+/**
+ * DeliveryBoyTracking Component - Real-time map tracking with Leaflet
+ */
 import React from "react";
 import scooter from "../assets/scooter.png";
 import home from "../assets/home.png";

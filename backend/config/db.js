@@ -1,9 +1,7 @@
-import mongoose from "mongoose";
-
 /**
- * MongoDB Connection with Connection Pooling
- * Optimized for high-traffic (5000+ req/s)
+ * MongoDB Connection - Optimized connection pooling for high-traffic
  */
+import mongoose from "mongoose";
 const connectDb = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URL, {

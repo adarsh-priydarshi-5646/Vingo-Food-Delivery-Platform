@@ -1,3 +1,6 @@
+/**
+ * Redux Store - Centralized state management configuration
+ */
 import { configureStore } from "@reduxjs/toolkit";
 import userSlice from "./userSlice";
 import ownerSlice from "./ownerSlice";

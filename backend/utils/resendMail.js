@@ -1,3 +1,6 @@
+/**
+ * Resend Mail Utils - Email sending via Resend API
+ */
 import { Resend } from 'resend';
 import dotenv from 'dotenv';
 dotenv.config();

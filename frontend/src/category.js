@@ -1,3 +1,6 @@
+/**
+ * Food Categories - Category data with images for homepage display
+ */
 import images from "./assets/all.jpg";
 import image1 from "./assets/image1.jpg";
 import image2 from "./assets/image2.webp";

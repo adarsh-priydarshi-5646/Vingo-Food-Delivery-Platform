@@ -1,3 +1,6 @@
+/**
+ * Error Handler Utils - Standardized error response helpers
+ */
 export const handleError = (res, error, context = 'operation') => {
   console.error(`${context} error:`, error);
   return res.status(500).json({ 

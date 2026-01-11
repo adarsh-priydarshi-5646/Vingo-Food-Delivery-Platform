@@ -1,3 +1,6 @@
+/**
+ * AddressAutocomplete Component - Location search with Geoapify autocomplete
+ */
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { FaMapMarkerAlt, FaSearch } from "react-icons/fa";

@@ -1,3 +1,6 @@
+/**
+ * ErrorBoundary Component - React error boundary for graceful error handling
+ */
 import React from 'react';
 import { FaExclamationTriangle, FaHome } from 'react-icons/fa';
 

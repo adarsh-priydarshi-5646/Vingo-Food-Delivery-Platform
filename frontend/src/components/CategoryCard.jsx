@@ -1,3 +1,6 @@
+/**
+ * CategoryCard Component - Food category display card with image
+ */
 import React from "react";
 
 function CategoryCard({ name, image, onClick }) {

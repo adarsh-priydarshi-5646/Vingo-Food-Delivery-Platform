@@ -1,3 +1,6 @@
+/**
+ * RestaurantCard Component - Restaurant display card with rating & info
+ */
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { FaStar, FaClock, FaMapMarkerAlt } from "react-icons/fa";

@@ -1,3 +1,6 @@
+/**
+ * useGetCity Hook - Geolocation with fallback: GPS -> Profile -> Cache -> Default
+ */
 import axios from "axios";
 import { useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";

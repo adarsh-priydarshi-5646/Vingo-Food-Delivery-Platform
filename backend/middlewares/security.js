@@ -1,3 +1,6 @@
+/**
+ * Security Middleware - Headers, sanitization & request size limiting
+ */
 export const securityHeaders = (req, res, next) => {
   res.setHeader('X-Frame-Options', 'DENY');
   res.setHeader('X-Content-Type-Options', 'nosniff');

@@ -1,3 +1,6 @@
+/**
+ * Nodemailer Utils - Email sending via Gmail SMTP
+ */
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 dotenv.config();
