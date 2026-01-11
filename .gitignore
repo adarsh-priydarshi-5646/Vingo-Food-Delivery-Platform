@@ -12,8 +12,6 @@ node_modules/
 .env
 .env.local
 .env.*.local
-frontend/.env
-backend/.env
 
 # Build outputs
 dist/
