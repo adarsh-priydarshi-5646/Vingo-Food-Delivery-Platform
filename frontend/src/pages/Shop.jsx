@@ -16,6 +16,7 @@ import {
   FaClock,
   FaUtensils,
   FaMotorcycle,
+  FaArrowLeft,
 } from 'react-icons/fa6';
 import FoodCard from '../components/FoodCard';
 import Nav from '../components/Nav';
@@ -57,6 +58,14 @@ function Shop() {
             <div className="bg-white border-b border-gray-200">
               <div className="max-w-7xl mx-auto px-4 md:px-6 py-4">
                 <div className="flex items-center gap-4">
+                  {/* Back Button */}
+                  <button
+                    onClick={() => navigate(-1)}
+                    className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors flex-shrink-0"
+                  >
+                    <FaArrowLeft className="text-gray-600" />
+                  </button>
+
                   {/* Shop Image - Small Thumbnail */}
                   <div className="w-16 h-16 md:w-20 md:h-20 rounded-xl overflow-hidden flex-shrink-0 shadow-md">
                     <img
