@@ -72,11 +72,18 @@ jobs:
             
             console.log(`📊 Combined status: ${statuses.state}`);
             
-            // Check if all checks passed
+            // Check if all checks passed (excluding this workflow itself)
             const failedChecks = [];
             const pendingChecks = [];
+            const thisWorkflowName = 'Auto Merge PR';
             
             for (const check of checkRuns.check_runs) {
+              // Skip this workflow to avoid circular dependency
+              if (check.name === thisWorkflowName) {
+                console.log(`  - ${check.name}: SKIPPED (self)`);
+                continue;
+              }
+              
               console.log(`  - ${check.name}: ${check.status} (${check.conclusion})`);
               
               if (check.status !== 'completed') {
