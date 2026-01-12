@@ -14,6 +14,8 @@ import {
   FaLocationDot,
   FaStar,
   FaClock,
+  FaUtensils,
+  FaMotorcycle,
 } from 'react-icons/fa6';
 import FoodCard from '../components/FoodCard';
 import Nav from '../components/Nav';
@@ -44,89 +46,112 @@ function Shop() {
   }, [shopId]);
 
   return (
-    <div className="min-h-screen bg-[#F8F8F8]">
+    <div className="min-h-screen bg-gray-50">
       <Nav />
 
-      {}
+      {/* Hero Banner Section */}
       {shop && (
-        <div className="relative w-full h-72 md:h-80 lg:h-96">
-          <img
-            src={shop.image}
-            alt={shop.name}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70"></div>
+        <div className="relative pt-20">
+          {/* Background Image with Overlay */}
+          <div className="relative w-full h-56 md:h-64 lg:h-72 overflow-hidden">
+            <img
+              src={shop.image}
+              alt={shop.name}
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+          </div>
 
-          <div className="absolute inset-0 flex flex-col justify-end px-6 pb-8 md:px-12 md:pb-12">
-            <div className="max-w-7xl mx-auto w-full">
-              {}
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-white rounded-full mb-4 shadow-lg">
-                <FaStore className="text-[#E23744] text-2xl" />
-              </div>
-
-              {}
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-3 drop-shadow-lg">
-                {shop.name}
-              </h1>
-
-              {}
-              <div className="flex flex-wrap items-center gap-4 text-white">
-                <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-full">
-                  <FaLocationDot className="text-red-400" />
-                  <span className="font-medium">{shop.address}</span>
+          {/* Shop Info Card - Overlapping */}
+          <div className="max-w-6xl mx-auto px-4 md:px-6">
+            <div className="relative -mt-20 md:-mt-24 bg-white rounded-2xl shadow-xl p-6 md:p-8 border border-gray-100">
+              <div className="flex flex-col md:flex-row md:items-start gap-6">
+                {/* Shop Logo/Icon */}
+                <div className="flex-shrink-0">
+                  <div className="w-20 h-20 md:w-24 md:h-24 bg-gradient-to-br from-[#E23744] to-[#c02a35] rounded-2xl flex items-center justify-center shadow-lg">
+                    <FaStore className="text-white text-3xl md:text-4xl" />
+                  </div>
                 </div>
 
-                {shop.rating && (
-                  <div className="flex items-center gap-2 bg-green-600 px-3 py-1.5 rounded-full">
-                    <FaStar className="text-white text-sm" />
-                    <span className="font-bold">{shop.rating}</span>
-                  </div>
-                )}
+                {/* Shop Details */}
+                <div className="flex-1 min-w-0">
+                  <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 truncate">
+                    {shop.name}
+                  </h1>
+                  
+                  {/* Cuisine Tags */}
+                  {shop.cuisine && (
+                    <div className="flex items-center gap-2 mb-4">
+                      <FaUtensils className="text-gray-400 text-sm" />
+                      <p className="text-gray-600 text-sm md:text-base">{shop.cuisine}</p>
+                    </div>
+                  )}
 
-                {shop.deliveryTime && (
-                  <div className="flex items-center gap-2 bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-full">
-                    <FaClock className="text-yellow-400" />
-                    <span className="font-medium">
-                      {shop.deliveryTime} mins
-                    </span>
+                  {/* Location */}
+                  <div className="flex items-start gap-2 mb-4">
+                    <FaLocationDot className="text-[#E23744] text-sm mt-1 flex-shrink-0" />
+                    <p className="text-gray-600 text-sm md:text-base">{shop.address}</p>
                   </div>
-                )}
+
+                  {/* Stats Row */}
+                  <div className="flex flex-wrap items-center gap-3">
+                    {shop.rating && (
+                      <div className="flex items-center gap-1.5 bg-green-50 text-green-700 px-3 py-1.5 rounded-full">
+                        <FaStar className="text-green-600 text-sm" />
+                        <span className="font-semibold text-sm">{shop.rating}</span>
+                        <span className="text-green-600 text-xs">Rating</span>
+                      </div>
+                    )}
+
+                    {shop.deliveryTime && (
+                      <div className="flex items-center gap-1.5 bg-orange-50 text-orange-700 px-3 py-1.5 rounded-full">
+                        <FaClock className="text-orange-500 text-sm" />
+                        <span className="font-semibold text-sm">{shop.deliveryTime}</span>
+                        <span className="text-orange-600 text-xs">mins</span>
+                      </div>
+                    )}
+
+                    <div className="flex items-center gap-1.5 bg-blue-50 text-blue-700 px-3 py-1.5 rounded-full">
+                      <FaMotorcycle className="text-blue-500 text-sm" />
+                      <span className="text-blue-600 text-xs font-medium">Free Delivery</span>
+                    </div>
+                  </div>
+                </div>
               </div>
-
-              {}
-              {shop.cuisine && (
-                <p className="text-gray-200 mt-3 text-lg">{shop.cuisine}</p>
-              )}
             </div>
           </div>
         </div>
       )}
 
-      {}
-      <div className="max-w-7xl mx-auto px-4 md:px-6 py-8">
-        <div className="mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">Our Menu</h2>
-          <p className="text-gray-600">{items.length} items available</p>
+      {/* Menu Section */}
+      <div className="max-w-6xl mx-auto px-4 md:px-6 py-8 md:py-12">
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900">Menu</h2>
+            <p className="text-gray-500 mt-1">{items.length} items available</p>
+          </div>
         </div>
 
         {items.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 md:gap-6">
             {items.map((item) => (
               <FoodCard data={item} key={item._id} />
             ))}
           </div>
         ) : (
-          <div className="bg-white rounded-2xl p-12 text-center shadow-sm border border-gray-200">
-            <FaStore className="text-gray-300 text-6xl mx-auto mb-4" />
+          <div className="bg-white rounded-2xl p-12 text-center shadow-sm border border-gray-100">
+            <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <FaUtensils className="text-gray-400 text-3xl" />
+            </div>
             <h3 className="text-gray-900 text-xl font-bold mb-2">
               No Items Available
             </h3>
-            <p className="text-gray-500 mb-6">
-              This restaurant hasn't added any items yet
+            <p className="text-gray-500 mb-6 max-w-sm mx-auto">
+              This restaurant hasn't added any menu items yet. Check back later!
             </p>
             <button
               onClick={() => navigate('/')}
-              className="px-6 py-3 bg-[#E23744] text-white font-semibold rounded-lg hover:bg-[#c02a35] transition-colors"
+              className="px-6 py-3 bg-[#E23744] text-white font-semibold rounded-xl hover:bg-[#c02a35] transition-all hover:shadow-lg"
             >
               Explore Other Restaurants
             </button>
