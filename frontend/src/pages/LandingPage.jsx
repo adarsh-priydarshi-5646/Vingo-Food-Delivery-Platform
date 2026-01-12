@@ -141,7 +141,7 @@ const LandingPage = () => {
       <nav className="absolute top-0 w-full z-50 flex justify-between items-center px-4 md:px-12 py-5 text-white max-w-[1100px] mx-auto left-0 right-0 font-[400]">
         <div className="flex items-center gap-6">
           <div className="flex items-center gap-2">
-            <div className="w-12 h-12 md:w-14 md:h-14 flex items-center justify-center">
+            <div className="w-14 h-14 md:w-16 md:h-16 flex items-center justify-center">
               <img src="/BiteDash.png" alt="BiteDash Logo" className="w-full h-full object-contain" />
             </div>
             <span className="font-bold text-xl hidden sm:block">BiteDash</span>
